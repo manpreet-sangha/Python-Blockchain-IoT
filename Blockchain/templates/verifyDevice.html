@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Blockchain Frontend</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/DataTables/css/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/static/css/custom.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+     <!-- Navigation -->
+     {% include 'header.html' %}
+          <!-- container -->
+    <!--  -->
+    <div class="container">
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card-body">
+              <h4 class="card-title">Construct Merkle Tree for verification, authentication of IoT device admitted to the blockchain  &nbsp;&nbsp;&nbsp;
+              </h4>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    <!-- Form to capture device details to add to Merkle Tree -->
+    <div class="container h-100">
+        <form id="merkleForm">
+        <div class="row pb-2">
+            <div class="col-lg-6" id="list_nodes1">
+                Mac Address
+            </div>
+            <div class="col-lg-6" id="list_nodes1">
+                <input name = "MACAddress" />
+            </div>
+        </div>
+        <div class="row pb-2">
+            <div class="col-lg-6" id="list_nodes1">
+                Features and Secret number
+            </div>
+            <div class="col-lg-6" id="list_nodes1">
+                <input name = "features" />
+            </div>
+        </div>
+        <div class="row pb-2">
+            <div class="col-lg-6" id="list_nodes1">
+                Device Name
+            </div>
+            <div class="col-lg-6" id="list_nodes1">
+                <input name = "device_name" />
+            </div>
+        </div>
+        </form>
+        <div class="row pb-2">
+            <div class="col-lg-12 text-center" id="list_nodes1">
+                <button type="button" class="btn btn-outline-primary" id = "add_device">Add Device to the Merkle Tree</button>
+<!--                <button type="button" class="btn btn-outline-secondary" id = "verify_device">Verify Device belongs to the Merkle Tree</button>-->
+<!--                <button type="button" class="btn btn-outline-secondary" id = "const_device">Check consistency of Merkle Tree</button>-->
+            </div>
+        </div>
+
+        <div class="row pb-2">
+          <div class="alert alert-success col text-center"  role="alert">
+            <div id="notification"></div>
+          </div>
+        </div>
+
+        <div class="row align-items-center h-100">
+            <div class="col-lg-4 pb-2">
+                <button type="button" class="btn btn-outline-secondary" id = "gethash">Monitor: Get Hash State</button>
+            </div>
+
+            <div class="col-lg-8">
+                <label for="mystate">Root hash will display here</label>
+                <div class="boxone" id="mystate">
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center h-100">
+            <div class="col-lg-3 justify-content-center align-items-center">
+                Updated Merkel Tree
+            </div>
+            <div class="col-lg-9">
+                <div class="mybox" id="tree">
+<!--                        <ul id="UnList"></ul> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center h-100">
+            <div class="col-lg-3">
+                <button type="button" class="btn btn-outline-secondary" id = "get_consistency" disabled>Merkle Tree Consistency Proof</button>
+            </div>
+            <div class="col-lg-9">
+                <div class="mybox" id="constProof">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row align-items-center h-100">
+            <div class="col-lg-3">
+                <button type="button" class="btn btn-outline-secondary" id = "verify_device">Verify Device</button>
+            </div>
+            <div class="col-lg-9">
+                <div class="mybox" id="commitment">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+     <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="/static/vendor/DataTables/js/datatables.min.js"></script>
+    <script src="/static/vendor/DataTables/js/ellipsis.js"></script>
+    <script>
+
+<!--    $('#add_device').click(function(e){-->
+<!--        e.preventDefault()-->
+<!--        var form = $("#merkleForm");-->
+<!--        $.ajax({-->
+<!--        type: "POST",-->
+<!--        url: "/api/merkleTree/add",-->
+<!--        data: form.serialize(), // serializes the form's elements.-->
+<!--        success: function(data)-->
+<!--        {-->
+<!--            $("#notification").html(data.merkleTreeData);-->
+<!--           alert(data.merkleTreeData);
+<!--        }-->
+<!--    });-->
+<!--    });-->
+
+<!--    $('#verify_device').click(function(e){-->
+<!--        e.preventDefault()-->
+<!--        var form = $("#merkleForm");-->
+<!--        $.ajax({-->
+<!--        type: "POST",-->
+<!--        url: "/api/merkleTree/verify",-->
+<!--        data: form.serialize(), // serializes the form's elements.-->
+<!--        success: function(data)-->
+<!--        {-->
+<!--            $("#notification").html(data.merkleTreeDataVerify);-->
+<!--           alert(data.merkleTreeDataVerify);
+<!--           $("#mtree").html(data.);-->
+<!--        }-->
+<!--    });-->
+<!--    });-->
+
+    $("#get_consistency").click(function(e){
+        e.preventDefault()
+        $.ajax({
+        type: "GET",
+        url: "/api/merkleTree/getconsistencyproof",
+        success: function(data)
+        {
+            $("#constProof").html(data.consistency);
+           alert(data.consistency);
+        }
+    });
+
+    });
+    $('#gethash').click(function(e){
+        e.preventDefault()
+        $.ajax({
+        type: "GET",
+        url: "/api/merkleTree/gethash",
+        success: function(data)
+        {
+            $("#mystate").html(data.state);
+            $('#get_consistency').prop('disabled', false);
+           alert(data.state);
+        }
+    });
+
+    });
+
+    $('#add_device').click(function(e){
+        e.preventDefault()
+        var form = $("#merkleForm");
+        $.ajax({
+        type: "POST",
+        url: "/api/merkleTree/add",
+        data: form.serialize(), // serializes the form's elements.
+        success: function(data)
+        {
+            getTree();
+            $("#notification").html(data.merkleTreeData);
+           alert(data.merkleTreeData);
+        }
+    });
+    });
+    function getTree(){
+        $.ajax({
+        type: "GET",
+        url: "/api/merkleTree/gettree",
+        success: function(data)
+        {
+           $("#tree").html(data.tree);
+<!--            data = data.tree;-->
+<!--            let list = document.getElementById("UnList");-->
+<!--            var fragList = document.createDocumentFragment();-->
+<!--            for (i = 0; i < data.length; ++i) {-->
+<!--                var li = document.createElement('li');-->
+<!--                li.textContent = data[i];-->
+<!--                fragList.appendChild(li);-->
+<!--            }-->
+<!--            list.appendChild(fragList);-->
+        }
+    });
+    }
+    $('#verify_device').click(function(e){
+        e.preventDefault()
+        var form = $("#merkleForm");
+        $.ajax({
+        type: "POST",
+        url: "/api/merkleTree/verify",
+        data: form.serialize(), // serializes the form's elements.
+        success: function(data)
+        {
+            $("#notification").html(data.mtreeNotification);
+            $("#commitment").html(data.commitment);
+           alert(data.mtreeNotification);
+        }
+    });
+    });
+
+    </script>
+    </body>
+    </html>
