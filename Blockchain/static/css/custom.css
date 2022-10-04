@@ -1,1 +1,32 @@
+body {
+	padding-top: 54px;
+	}
 
+.mybox {
+	min-height: 100px;
+	height: auto;
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 20px;
+	margin: 5px;
+	overflow:auto;
+	padding: 8px;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	-ms-border-radius: 25px;
+	-o-border-radius: 25px;
+}
+
+.boxone{
+	height: 60px;
+	width: 620px;
+	margin: 5px;
+	padding: 8px;
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
+}
+
+#mypadding{
+	padding-bottom: 20px;
