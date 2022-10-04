@@ -3,6 +3,13 @@
 
 ## Important: This project is for educational purposes only and the source code shouldn't be use in production as it doesn't have good security, doesn't scale well and lacks many important features.
 
+# 02/10/2022 - Manpreet Sangha - Most of the code changes are from publicly available code repos 
+# Adapted to admit BLE IoT devices into the blockchain
+# Implemented endpoints to scan BLE devices, Merkle Tree demo for audit proof of IoT devices in the blockchain & consistency check of the blockchain ledgers, extract  data from RaspberryPi
+# Enhanced the encryption algorithm from RSA to hybrid AES scheme where AES session key is encrypted with RSA
+# Replaced RSA signatures with ECDSA signatures and used NIST curves with SHA256 hashing.
+#
+
 
 <div style="display:block;margin:auto;height:80%;width:80%">
   <img src="blockchain-simulation.gif">
